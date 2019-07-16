@@ -1,0 +1,81 @@
+Queries Used for creating tables
+
+•	create table teams
+(Team_id int(11) primary key,
+Team_Name varchar(25) not null,
+City varchar(25) not null);
+
+•	create table own
+(Team_id int(11) not null,
+Owner varchar(20) not null,
+constraint own_fk foreign key(Team_id) references teams(Team_id) on delete cascade on update cascade,
+primary key(Team_id,Owner));
+
+
+•	create table players
+(Team varchar(3) not null,
+Kit_no int(11) not null,
+Player_name varchar(20) not null,
+Position varchar(3) not null,
+Nationality varchar(20) not null,
+DOB Date not null,
+team_id int(11) not null,
+year_start Year not null,
+primary key(Team,Kit_no), 
+constraint players_fk foreign key(team_id) references teams(Team_id) on delete cascade on update cascade);
+
+
+•	create table stadium
+(Stadium_id varchar(5) primary key,
+Stadium_Name varchar(30) not null,
+Capacity int(11) not null,
+Team_id int(11) not null,
+constraint stadium_fk foreign key(Team_id) references teams(Team_id) on delete cascade on update cascade);
+
+•	create table coach
+(Coach_id varchar(6) primary key,
+First_Name varchar(20) not null,
+Last_Name varchar(20) not null,
+Nationality varchar(20) not null,
+Team_id int(11) not null,
+contract_start Year not null,
+constraint coach_fk foreign key(Team_id) references teams(Team_id) on delete cascade on update cascade,
+INDEX Coach_Name(First_Name,Last_Name));
+
+•	create table match_info
+(match_id int(11) primary key,
+home_goals int(11) not null,
+away_goals int(11) not null,
+score varchar(4) not null,
+result varchar(4) not null,
+Date DATE not null);
+
+•	create table plays
+(match_id int(11) primary key,
+Home_Team int(11) not null,
+Away_Team int(11) not null,
+constraint plays_fk1 foreign key(Home_Team) references teams(Team_id) on delete restrict on update restrict,
+constraint plays_fk2 foreign key(Away_Team) references teams(Team_id) on delete restrict on update restrict);
+
+
+
+
+
+
+
+
+
+
+•	create table league
+(season int(11) not null,
+pos int(11) not null,
+Pl int(11) not null,
+W int(11) not null,
+D int(11) not null,
+L int(11) not null,
+GF int(11) not null,
+GA int(11) not null,
+Points int(11) not null,
+team_id int(11) not null,
+primary key(season,pos), 
+constraint league_fk foreign key(team_id) references teams(Team_id) on delete cascade on update cascade);
